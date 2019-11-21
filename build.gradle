@@ -1,0 +1,35 @@
+plugins {
+	id 'org.springframework.boot' version '2.2.1.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+	id 'java'
+}
+
+group = 'io.turntabl'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+	jcenter()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-web-services'
+	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.0'
+	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.0'
+	compile  'com.google.code.gson:gson:2.8.5'
+	runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'org.postgresql:postgresql'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	compile 'org.springframework.boot:spring-boot-starter-data-redis'
+	compile 'redis.clients:jedis:3.0.0'
+
+}
+
+test {
+	useJUnitPlatform()
+}
