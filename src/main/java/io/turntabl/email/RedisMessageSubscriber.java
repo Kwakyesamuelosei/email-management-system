@@ -10,30 +10,24 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPubSub;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 @RestController
-@Service
-public class RedisMessageSubscriber implements MessageListener {
+public class RedisMessageSubscriber {
 
-    List<Client> clients = new ArrayList<>();
+    public static List<Client> clients = new ArrayList<>();
 
-    @Override
-    public void onMessage(Message message, byte[] pattern) {
-        Gson gson = new Gson();
-        Client client = gson.fromJson(message.toString(), Client.class);
-        Client client1 = new Client(
-                client.getClient_name(),
-                client.getClient_address(),
-                client.getClient_telephone(),
-                client.getClient_email()
-        );
-        clients.add(client1);
+    public void messageListener(Client client) {
+//        System.out.println("Get Message Listener: " + client);
+        clients.add(client);
+//        System.out.println("Get All client : " + clients);
+
     }
-
     @ApiOperation("Get All Notification Published By Customer Service")
     @GetMapping("/v1/api/notifications")
     public List<Client> getNotifications() {
